@@ -1,10 +1,12 @@
 namespace ImproveSales
 {
     using ImproveSales.Database;
+    using ImproveSales.Database.Helpers;
     using ImproveSales.Database.Models;
     using ImproveSales.Resources.Helpers;
     using ImproveSales.Resources.Helpers.Attributes;
     using ImproveSales.Services.Policies;
+    using ImproveSales.Resources;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -13,6 +15,7 @@ namespace ImproveSales
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using Microsoft.AspNetCore.Identity.UI.Services;
 
     public class Startup
     {
@@ -27,7 +30,7 @@ namespace ImproveSales
         {
             services.AddRazorPages();
             services.AddDbContext<ImproveSalesDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString(Dictionary.ConnectionStringName)));
+                options.UseSqlServer(Configuration.GetConnectionString(Translator.ConnectionStringName)));
             services.AddIdentity<User, Role>(options =>
                     {
                         options.SignIn.RequireConfirmedEmail = true;
@@ -44,10 +47,13 @@ namespace ImproveSales
             services.AddAuthorization(options =>
                 options.AddPolicy("AuthorizedRequirement", policy => policy.Requirements.Add(new AuthorizationRequirement("Identity/Account/Login"))));
 
-            services.AddSingleton<IAuthorizationHandler, AuthorizedHandler>();
+            RegisterInterfaces(services);
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, 
+                              IWebHostEnvironment env,
+                              UserManager<User> userManager,
+                              RoleManager<Role> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -65,11 +71,29 @@ namespace ImproveSales
             app.UseRouting();
 
             app.UseAuthorization();
+            IdentityDataIniatilizer.SeedData(userManager, roleManager);
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
             });
+
+            using (var dbContext = app
+                        .ApplicationServices
+                        .GetRequiredService<IServiceScopeFactory>()
+                        .CreateScope()
+                        .ServiceProvider
+                        .GetService<ImproveSalesDbContext>())
+            {
+                dbContext.Database.Migrate();
+            }
+        }
+
+        private void RegisterInterfaces(IServiceCollection services)
+        {
+            services.AddSingleton<IAuthorizationHandler, AuthorizedHandler>();
+
+            services.AddTransient<IEmailSender, EmailSender>();
         }
     }
 }

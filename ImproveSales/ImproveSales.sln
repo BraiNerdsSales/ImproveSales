@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29512.175
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImproveSales", "ImproveSales\ImproveSales.csproj", "{0A8FFB4F-D45C-45E9-8C5B-D37C91430BF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImproveSales", "ImproveSales\ImproveSales.csproj", "{0A8FFB4F-D45C-45E9-8C5B-D37C91430BF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImproveSales.Database", "ImproveSales.Database\ImproveSales.Database.csproj", "{81B7CE50-16D3-4006-95D6-C39B0B0D196C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImproveSales.Database", "ImproveSales.Database\ImproveSales.Database.csproj", "{81B7CE50-16D3-4006-95D6-C39B0B0D196C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImproveSales.Resources", "Translator\ImproveSales.Resources.csproj", "{8C653873-46FE-4DE6-BC5A-49A68B3A6994}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{81B7CE50-16D3-4006-95D6-C39B0B0D196C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81B7CE50-16D3-4006-95D6-C39B0B0D196C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81B7CE50-16D3-4006-95D6-C39B0B0D196C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C653873-46FE-4DE6-BC5A-49A68B3A6994}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C653873-46FE-4DE6-BC5A-49A68B3A6994}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C653873-46FE-4DE6-BC5A-49A68B3A6994}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C653873-46FE-4DE6-BC5A-49A68B3A6994}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
