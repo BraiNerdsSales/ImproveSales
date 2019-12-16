@@ -1,0 +1,27 @@
+[
+    {
+      "imageName": "image1.png",
+      "content": "Content image1",
+      "pathToProduct": "http://localhost:6000/etc"
+    },
+    {
+      "imageName": "image2.png",
+      "content": "Content image2",
+      "pathToProduct": "http://localhost:6000/etc"
+    },
+    {
+      "imageName": "image3.png",
+      "content": "Content image3",
+      "pathToProduct": "http://localhost:6000/etc"
+    },
+    {
+      "imageName": "image4.png",
+      "content": "Content image4",
+      "pathToProduct": "http://localhost:6000/etc"
+    },
+    {
+      "imageName": "image5.png",
+      "content": "Content image5",
+      "pathToProduct": "http://localhost:6000/etc"
+    }
+  ]
