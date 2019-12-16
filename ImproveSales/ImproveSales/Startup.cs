@@ -3,8 +3,7 @@ namespace ImproveSales
     using ImproveSales.Database;
     using ImproveSales.Database.Helpers;
     using ImproveSales.Database.Models;
-    using ImproveSales.Resources.Helpers;
-    using ImproveSales.Resources.Helpers.Attributes;
+    using ImproveSales.Helpers.Attributes;
     using ImproveSales.Services.Policies;
     using ImproveSales.Resources;
     using Microsoft.AspNetCore.Authorization;
@@ -16,6 +15,9 @@ namespace ImproveSales
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Microsoft.AspNetCore.Identity.UI.Services;
+    using Microsoft.AspNetCore.Mvc.Razor;
+    using ImproveSales.Services.Carousel;
+    using ImproveSales.Interfaces.Services.Carousel;
 
     public class Startup
     {
@@ -28,7 +30,11 @@ namespace ImproveSales
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
+            services.AddRazorPages()
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                .AddDataAnnotationsLocalization();
+
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddDbContext<ImproveSalesDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString(Translator.ConnectionStringName)));
             services.AddIdentity<User, Role>(options =>
@@ -79,15 +85,13 @@ namespace ImproveSales
                 endpoints.MapRazorPages();
             });
 
-            using (var dbContext = app
+            using var dbContext = app
                         .ApplicationServices
                         .GetRequiredService<IServiceScopeFactory>()
                         .CreateScope()
                         .ServiceProvider
-                        .GetService<ImproveSalesDbContext>())
-            {
-                dbContext.Database.Migrate();
-            }
+                        .GetService<ImproveSalesDbContext>();
+            dbContext.Database.Migrate();
         }
 
         private void RegisterInterfaces(IServiceCollection services)
@@ -95,6 +99,7 @@ namespace ImproveSales
             services.AddSingleton<IAuthorizationHandler, AuthorizedHandler>();
 
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddScoped<ICarouselImagesService, CarouselImagesService>();
         }
     }
 }

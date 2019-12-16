@@ -1,4 +1,4 @@
-﻿namespace ImproveSales.Resources.Helpers.Attributes
+﻿namespace ImproveSales.Helpers.Attributes
 {
     using ImproveSales.Services.Policies;
     using Microsoft.AspNetCore.Authorization;

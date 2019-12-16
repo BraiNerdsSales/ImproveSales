@@ -1,10 +1,44 @@
 ﻿@page
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = Localizer["IndexTitle"];
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    <div id="carouselIndicators" class="carousel slide linearBackground" data-ride="carousel">
+        <ol class="carousel-indicators">
+
+            @for (int i = 0; i < Model.CarouselImages.Count; i++)
+            {
+                <li id="carouselDots" data-target="#carouselIndicators" class="linearBackground" data-slide-to="@i"></li>
+            }
+        </ol>
+        <div class="carousel-inner">
+            @foreach (var carouselImage in Model.CarouselImages)
+            {
+                <div id="carouselImages" class="carousel-item linearBackground">
+                    <img class="d-block w-100" src="~/images/index/carousel/@carouselImage.ImageName" alt="@carouselImage.Content">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>@carouselImage.Content</h5>
+                        <p>@carouselImage.Content</p>
+                    </div>
+                </div>
+            }
+        </div>
+        <a class="carousel-control-prev" href="#carouselIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+<script>
+    window.onload = function() {
+        loadActiveItems();
+    }
+</script>
